@@ -1,7 +1,8 @@
-## isrsvm
+##### isrsvm
 A project to differentiate between earthquakes and blasting waves using Support Vector Machines.
 
-#Prerequisites:
+###Prerequisites:
+
 To run this project, you would need a linux-based operating system (Ubuntu or Fedora would work best).
 
 The code is written in Python 2.7.12+, but any version of Python 2 would work. 
@@ -12,7 +13,8 @@ You would also need the following downloaded in your system:
 - Matplotlib
 - Scikit-Learn
 
-#Running the code:
+###Running the code:
+
 The feature vector is stored in store.txt present in isrsvm/PS/Code.
 To create a new feature vector (while erasing the previous one):
 ```
@@ -27,7 +29,8 @@ or
 python P_S.py
 ```
 
-#Datasets:
+###Datasets:
+
 The datasets are present in isrsvm/PS/Datasets.
 
 
