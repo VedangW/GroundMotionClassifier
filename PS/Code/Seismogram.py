@@ -72,9 +72,10 @@ class Seismogram:
 		import numpy as np
 		import matplotlib.pyplot as plt
 
-		x_range = np.arange(0.,self.dat_num * 0.02, 0.02)
+		x_range = np.arange(0.,self.get_ndat() * 0.02, 0.02)
 		y_range = np.array(self.get_amplitudes())
 
+		plt.figure('Seismogram')
 		plt.plot(x_range, y_range, linewidth = 2.0)
 		plt.ylabel('S(t)')
 		plt.xlabel('t')
@@ -110,8 +111,8 @@ def main():
 #	print "Area between x0 and x1: ", fd.find_area(limits)
 
 #	print "Plotting seismogram..."
-#	fd.plot_graph()
-#S	plt.show()
+	fd.plot_graph()
+	plt.show()
 
 if __name__ == "__main__":
 	main()
