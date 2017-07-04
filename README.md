@@ -7,11 +7,12 @@ To run this project, you would need a linux-based operating system (Ubuntu or Fe
 
 The code is written in Python 2.7.12+, but any version of Python 2 would work. 
 
-You would also need the following downloaded in your system:
+You would also need the following installed in your system:
 - Scipy
 - Numpy
 - Matplotlib
 - Scikit-Learn
+- Peakutils
 
 ## Running the code:
 
@@ -23,10 +24,7 @@ sh run.sh
 To test the working of any module, you can simply compile it with Python 2, for eg.:
 ```
 python Seismogram.py
-```
-or
-```
-python P_S.py
+python rsp.py
 ```
 
 ## Datasets:
