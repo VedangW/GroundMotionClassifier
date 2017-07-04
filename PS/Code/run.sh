@@ -22,14 +22,12 @@ space=" "
 for iter in `seq 1 9`;
 do
 	c=$strones$iter
-	running="Running "
+	running="Analysing "
 	echo $running$c
-	var1="$(python P_S.py $path $c $access_rights)"
-#	echo $var1 >> store.txt
+	var1="$(python rsp.py $path $c $access_rights)"
 	var2="$(python spectral.py $path $c $access_rights)"
 	var3="$(python complexity.py $path $c $access_rights)"
-	var4="$(python rms.py $path $c $access_rights)"
-	reading=$var1$space$var2$space$var3$space$var4
+	reading=$var1$space$var2$space$var3
 	echo $reading >> store.txt
 done
 
@@ -37,14 +35,12 @@ done
 for iter in `seq 10 57`;
 do
 	c=$strtens$iter
-	running="Running "
+	running="Analysing "
 	echo $running$c
-	var1="$(python P_S.py $path $c $access_rights)"
-#	echo $var1 >> store.txt
+	var1="$(python rsp.py $path $c $access_rights)"
 	var2="$(python spectral.py $path $c $access_rights)"
 	var3="$(python complexity.py $path $c $access_rights)"
-	var4="$(python rms.py $path $c $access_rights)"
-	reading=$var1$space$var2$space$var3$space$var4
+	reading=$var1$space$var2$space$var3
 	echo $reading >> store.txt
 done
 
@@ -63,14 +59,12 @@ space=" "
 for iter in `seq 1 9`;
 do
 	c=$strones$iter
-	running="Running "
+	running="Analysing "
 	echo $running$c
-	var1="$(python P_S.py $path $c $access_rights)"
-#	echo $var1 >> store.txt
+	var1="$(python rsp.py $path $c $access_rights)"
 	var2="$(python spectral.py $path $c $access_rights)"
 	var3="$(python complexity.py $path $c $access_rights)"
-	var4="$(python rms.py $path $c $access_rights)"
-	reading=$var1$space$var2$space$var3$space$var4
+	reading=$var1$space$var2$space$var3
 	echo $reading >> store.txt
 done
 
@@ -78,14 +72,12 @@ done
 for iter in `seq 10 46`;
 do
 	c=$strtens$iter
-	running="Running "
+	running="Analysing "
 	echo $running$c
-	var1="$(python P_S.py $path $c $access_rights)"
-#	echo $var1 >> store.txt
+	var1="$(python rsp.py $path $c $access_rights)"
 	var2="$(python spectral.py $path $c $access_rights)"
 	var3="$(python complexity.py $path $c $access_rights)"
-	var4="$(python rms.py $path $c $access_rights)"
-	reading=$var1$space$var2$space$var3$space$var4
+	reading=$var1$space$var2$space$var3
 	echo $reading >> store.txt
 done
 

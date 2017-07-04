@@ -3,6 +3,7 @@
 """	This is a custom made module containing the class definition 
 	of an object of type 'Seismogram' which can be used to read a 
 	particular file in a needed way, plot its graph and find the area.
+
 """
 
 class Seismogram:
@@ -32,22 +33,27 @@ class Seismogram:
 	#Returns list of amplitudes
 	def get_amplitudes(self):
 		import os
+		import pandas as pd
+		import peakutils as pkt
+
 		os.chdir(self.path)
 
 		self.amplitudelist = []
-		with open(self.filename) as f:
-			lines = f.readlines()
-			for ln in lines[5:self.get_ndat() + 5]:
-				data = ln.split()
-				self.amplitudelist.append(int(data[0]))
-		
+		self.amplitudelist = pd.read_csv(self.filename, skiprows=5, header=None).values
+
+		#Baseline correction
+		for a in self.amplitudelist:
+			a += 10000000
+		baseline = pkt.baseline(self.amplitudelist)
+		self.amplitudelist = self.amplitudelist - baseline
+
 		return self.amplitudelist
 
 	#Returns path to file
 	def get_path(self):
 		return self.path
 
-	#Returns given access rights
+	#Returns given access rightsbas
 	def get_access_rights(self):
 		return self.access_rights
 
@@ -92,14 +98,23 @@ class Seismogram:
 		y_range = np.array(amps[x0:x1])
 		Area = trapz(y_range, dx = 0.02)
 
-		return Area
+		return Areas
 
 
 #Just as an example for how to use it. Run the program to know.
 def main():
+	import sys
 	import matplotlib.pyplot as plt
 
-	fd = Seismogram("/home/vedang/Desktop/PS/Datasets/Kachchh", "pitsa001.048", "r")
+	if sys.argv[1] == "Kachchh":
+		path = "/home/vedang/Desktop/PS/Datasets/Kachchh"
+	elif sys.argv[1] == "Surendranagar":
+		path = "/home/vedang/Desktop/PS/Datasets/Surendranagar"
+	else:
+		print "Check path again."
+		return 
+
+	fd = Seismogram(path, sys.argv[2], "r")
 #	print "List of amplitudes: ", fd.get_amplitudes()
 #	print "Number of data points: ", fd.get_ndat()
 #	print "Filename: ", fd.get_filename()
@@ -116,3 +131,14 @@ def main():
 
 if __name__ == "__main__":
 	main()
+
+"""	FOOTER:
+
+		#Baseline correction ---------------
+		for a in self.amplitudelist:
+			a += NORMAL
+
+		baseline = pkt.baseline(self.amplitudelist)
+		self.amplitudelist -= baseline
+		#-----------------------------------
+"""
