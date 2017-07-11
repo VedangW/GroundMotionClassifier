@@ -25,9 +25,10 @@ do
 	running="Analysing "
 	echo $running$c
 	var1="$(python rsp.py $path $c $access_rights)"
-	var2="$(python spectral.py $path $c $access_rights)"
-	var3="$(python complexity.py $path $c $access_rights)"
-	reading=$var1$space$var2$space$var3
+	var2="$(python sr.py $path $c $access_rights)"
+	var3="$(python complexity.py $path $c $access_rights $var1)"
+	var4="$(python pe.py $var1 $var2 $var3)"
+	reading=$var1$space$var4
 	echo $reading >> store.txt
 done
 
@@ -38,9 +39,10 @@ do
 	running="Analysing "
 	echo $running$c
 	var1="$(python rsp.py $path $c $access_rights)"
-	var2="$(python spectral.py $path $c $access_rights)"
-	var3="$(python complexity.py $path $c $access_rights)"
-	reading=$var1$space$var2$space$var3
+	var2="$(python sr.py $path $c $access_rights)"
+	var3="$(python complexity.py $path $c $access_rights $var1)"
+	var4="$(python pe.py $var1 $var2 $var3)"
+	reading=$var1$space$var4
 	echo $reading >> store.txt
 done
 
@@ -50,11 +52,6 @@ access_rights="r"
 
 echo Searching in $path...
 
-strones="pitsa001.00"
-strtens="pitsa001.0"
-
-space=" "
-
 #For files 'pitsa001.001' to 'pitsa001.009'
 for iter in `seq 1 9`;
 do
@@ -62,9 +59,10 @@ do
 	running="Analysing "
 	echo $running$c
 	var1="$(python rsp.py $path $c $access_rights)"
-	var2="$(python spectral.py $path $c $access_rights)"
-	var3="$(python complexity.py $path $c $access_rights)"
-	reading=$var1$space$var2$space$var3
+	var2="$(python sr.py $path $c $access_rights)"
+	var3="$(python complexity.py $path $c $access_rights $var1)"
+	var4="$(python pe.py $var1 $var2 $var3)"
+	reading=$var1$space$var4
 	echo $reading >> store.txt
 done
 
@@ -75,10 +73,11 @@ do
 	running="Analysing "
 	echo $running$c
 	var1="$(python rsp.py $path $c $access_rights)"
-	var2="$(python spectral.py $path $c $access_rights)"
-	var3="$(python complexity.py $path $c $access_rights)"
-	reading=$var1$space$var2$space$var3
+	var2="$(python sr.py $path $c $access_rights)"
+	var3="$(python complexity.py $path $c $access_rights $var1)"
+	var4="$(python pe.py $var1 $var2 $var3)"
+	reading=$var1$space$var4
 	echo $reading >> store.txt
 done
 
-echo All finished.
+echo Feature vector stored.

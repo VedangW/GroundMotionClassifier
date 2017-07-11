@@ -65,10 +65,10 @@ def findp(smg):
 
 	return P
 
-def main():
+def find_rsp(path, file, acc_rights):
 	t0 = time()
 
-	smg = Seismogram(sys.argv[1], sys.argv[2], sys.argv[3])
+	smg = Seismogram(path, file, acc_rights)
 
 	P = findp(smg)
 	ndat = smg.get_ndat()
@@ -78,7 +78,7 @@ def main():
 			print "P wave not found"
 		else:
 			print P[0]
-			print P[1]
+#			print P[1]
 
 			x_coord = 0.02 * (P[0] - 1)
 			y_coord = P[1]
@@ -89,6 +89,7 @@ def main():
 			line_y = x_coord
 
 #			print "Time taken: ", time() - t0, " s"
+
 			"""
 			#Plotting the figure
 			fig = plt.figure('P Wave Location')
@@ -110,10 +111,16 @@ def main():
 
 			plt.show()
 			"""
+			return P[0]
+
 	except IndexError as e:		#Index error means SNR was always < limiting ratio
 		if e.message == "list index out of range":
 			print "N/A"
 
+			return False
+
+def main():
+	find_rsp(sys.argv[1], sys.argv[2], sys.argv[3])
 
 if __name__ == "__main__":
 	main()

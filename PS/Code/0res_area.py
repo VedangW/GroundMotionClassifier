@@ -1,8 +1,7 @@
 #!usr/bin/python
 
-"""	Module for calculating the area beneath a curve
-	which will be used in calculating the Spectral Ratio
-	and the Complexity
+"""	Resource file for calculating the area in 
+	different ways.
 """
 import os
 import numpy as np
@@ -52,7 +51,7 @@ def main():
 	print "Area under curve by findArea: ", Area
 
 	t0 = time()
-	Area = trapz(y_range, dx = 0.02)
+	Area = trapz(y_range[0:17], dx = 0.02)
 	print "Area under curve by trapz: ", Area
 	print "Time taken: ", time() - t0, " s"
 
