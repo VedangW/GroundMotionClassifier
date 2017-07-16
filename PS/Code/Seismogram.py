@@ -124,12 +124,12 @@ def main():
 	print "Station code is: ", fd.get_stationcode()
 
 	limits = [10, 575]
-	print "Area between x0 and x1: ", fd.find_area(limits)
-"""
-#	print "Plotting seismogram..."
+#	print "Area between x0 and x1: ", fd.find_area(limits)
+
+	print "Plotting seismogram..."
 	fd.plot_graph()
 	plt.show()
-"""
+
 
 if __name__ == "__main__":
 	main()

@@ -90,7 +90,7 @@ def find_rsp(path, file, acc_rights):
 
 #			print "Time taken: ", time() - t0, " s"
 
-			"""
+			
 			#Plotting the figure
 			fig = plt.figure('P Wave Location')
 
@@ -110,7 +110,7 @@ def find_rsp(path, file, acc_rights):
 			ax1.legend()
 
 			plt.show()
-			"""
+			
 			return P[0]
 
 	except IndexError as e:		#Index error means SNR was always < limiting ratio
