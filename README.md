@@ -23,8 +23,8 @@ sh run.sh
 ```
 To test the working of any module, you can simply compile it with Python 2, for eg.:
 ```
-python Seismogram.py
-python rsp.py
+python Seismogram.py Kachchh pitsa001.044
+python rsp.py /path/to/PS/Datasets/Surendranagar pitsa001.003 r
 ```
 
 ## Datasets:
