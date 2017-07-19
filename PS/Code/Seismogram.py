@@ -99,8 +99,6 @@ class Seismogram:
 		x0 = int(limits[0])
 		x1 = int(limits[1])
 		amps = self.get_amplitudes()
-		flat_list = [item for sublist in amps for item in sublist]
-		amps = flat_list
 		
 		Area = trapz(amps[x0:x1], dx=0.02)
 		

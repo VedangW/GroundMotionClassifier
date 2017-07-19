@@ -82,7 +82,7 @@ def butter_filter(data, lowcut, highcut, fs, order=2):
 
 #Function to return the time of P wave detection
 def find_ptime(snr):
-	lim_ratio = 2.0
+	lim_ratio = 2.5
 
 	for i in snr:
 		if i >= lim_ratio:
@@ -110,6 +110,7 @@ def find_rsp(path, file, acc_rights):
 	#Storing and filtering the list of amplitudes
 	smg = Seismogram(path, file, acc_rights)
 	amps = smg.get_amplitudes()
+	print amps
 	amps = butter_filter(amps, 1, 10, 50, 2)
 
 	#Storing the envelope function
