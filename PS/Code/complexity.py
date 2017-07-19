@@ -2,10 +2,13 @@
 
 """	This is a module to find the complexity of
 	a particular seismogram.
+
+	Author: VedangW
 """
 import os
 import sys
 import rsp 
+from time import time
 from Seismogram import Seismogram
 
 #A function to calculate the complexity given the limits
@@ -18,6 +21,7 @@ def complexity(smg, limits_high, limits_low):
 
 #A function to find the appropriate limits and call the complexity function
 def find_C(path, file, acc_rights, rsp):
+	t = time()
 	smg = Seismogram(path, file, acc_rights)
 
 	#t0 is the start of the P wave, t1 and t2 at 3 and 7 secs from it
@@ -30,6 +34,7 @@ def find_C(path, file, acc_rights, rsp):
 	ll = [t0, t1]
 
 	C = complexity(smg, lh, ll)
+	print "Time taken: ", time() - t
 	print C
 
 #args = [path, filename, access rights]

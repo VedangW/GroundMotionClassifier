@@ -3,6 +3,8 @@
 """	This is a custom made module containing the class definition 
 	of an object of type 'Seismogram' which can be used to read a 
 	particular file in a needed way, plot its graph and find the area.
+
+	Author: VedangW
 """
 
 class Seismogram:
@@ -46,6 +48,10 @@ class Seismogram:
 		baseline = pkt.baseline(self.amplitudelist)
 		self.amplitudelist = self.amplitudelist - baseline
 
+		amps = self.amplitudelist
+		flat_list = [item for sublist in amps for item in sublist]
+		self.amplitudelist = flat_list
+
 		return self.amplitudelist
 
 	#Returns path to file
@@ -82,14 +88,13 @@ class Seismogram:
 
 		plt.figure('Seismogram')
 		plt.plot(x_range, y_range, linewidth = 2.0)
-		plt.ylabel('S(t)')
-		plt.xlabel('t')
+		plt.ylabel('S(t) m/s')
+		plt.xlabel('t (s)')
 
 	#Finda area of seismogram within given limits
 	def find_area(self, limits):
 		import numpy as np
 		from numpy import trapz
-		from scipy.integrate import simps
 
 		x0 = int(limits[0])
 		x1 = int(limits[1])

@@ -1,6 +1,8 @@
 #!bin/bash
 
 #Program to find the feature vector for the classifier
+#Author: VedangW
+
 echo Beginning to form the feature vector...
 #Clear all contents of the file
 > store.txt 
