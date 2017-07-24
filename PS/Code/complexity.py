@@ -34,7 +34,7 @@ def find_C(path, file, acc_rights, rsp):
 	ll = [t0, t1]
 
 	C = complexity(smg, lh, ll)
-	print "Time taken: ", time() - t
+#	print "Time taken: ", time() - t
 	print C
 
 #args = [path, filename, access rights]

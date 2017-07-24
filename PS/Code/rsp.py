@@ -81,14 +81,36 @@ def butter_filter(data, lowcut, highcut, fs, order=2):
 	return y
 
 #Function to return the time of P wave detection
-def find_ptime(snr):
-	lim_ratio = 2.5
+def find_phase_times(snr):
+	p_lim_ratio = 2.5
+	s_lim_ratio = 3.58
+
+	phases = []
+	p_found = False
+	s_found = False
 
 	for i in snr:
-		if i >= lim_ratio:
-			return snr.index(i)
+		if i >= p_lim_ratio:
+			p_time = snr.index(i)
+			phases.append(p_time)
+			p_found = True
+			break
 
-	return False
+	if p_found:
+		for i in range(p_time, len(snr)):
+			if snr[i] >= s_lim_ratio:
+				s_time = i
+				phases.append(s_time)
+				s_found = True
+				break
+
+	if p_found == False:
+		return False
+	else:
+		phases.append(p_found)
+		phases.append(s_found)
+
+	return phases
 
 #Function to apply the Hanning filter to the SNR vector
 def smooth(x, window_len=11, window='hanning'):
@@ -109,9 +131,8 @@ def find_rsp(path, file, acc_rights):
 
 	#Storing and filtering the list of amplitudes
 	smg = Seismogram(path, file, acc_rights)
-	amps = smg.get_amplitudes()
-	print amps
-	amps = butter_filter(amps, 1, 10, 50, 2)
+	data = smg.get_amplitudes()
+	amps = butter_filter(data, 1, 10, 50, 2)
 
 	#Storing the envelope function
 	P = find_snr(smg, amps)
@@ -124,16 +145,39 @@ def find_rsp(path, file, acc_rights):
 		snr.pop()
 
 	ndat = smg.get_ndat()
-	ptime = find_ptime(snr)
-	p_amp = amps[ptime]
+	phases = find_phase_times(snr)
+	
+	if phases == False:
+		ptime = False
+		stime = False
+		p_found = False
+		s_found = False
+	elif len(phases) == 3:
+		ptime = phases[0]
+		stime = False
+		p_found = phases[1]
+		s_found = phases[2]
+	else:
+		ptime = phases[0]
+		stime = phases[1]
+		p_found = phases[2]
+		s_found = phases[3]
+
+	if p_found == True and s_found == True:
+		p_amp = snr[ptime]
+		s_amp = snr[stime]
+		rsp = p_amp / s_amp
+	else:
+		rsp = "N/A"
 
 	try:
 		if (P == False):
 			print "P wave not found"
 		else:
-			x_coord = 0.02 * ptime
+			px_coord = 0.02 * ptime
+			sx_coord = 0.02 * stime
 			x = np.arange(0., ndat * 0.02, 0.02)
-
+			"""
 			print "Time taken: ", time() - t0, " s"
 
 			#Plotting the graphs
@@ -142,7 +186,8 @@ def find_rsp(path, file, acc_rights):
 			#Dataset with Butterworth filter
 			ax0 = fig.add_subplot(311)
 			ax0.plot(x, amps, label='signal', color='cornflowerblue')
-			ax0.axvline(x=x_coord, color='r', linestyle='dashed', label='P wave')
+			ax0.axvline(x=px_coord, color='r', linestyle='dashed', label='P wave')
+			ax0.axvline(x=sx_coord, color='k', linestyle='dashed', label='S wave')
 			ax0.set_xlabel('t (s)')
 			ax0.set_ylabel('S(t) m/s')
 			ax0.legend()
@@ -150,7 +195,8 @@ def find_rsp(path, file, acc_rights):
 			#Envelope function
 			ax1 = fig.add_subplot(312)
 			ax1.plot(x, envelope, label='envelope')
-			ax1.axvline(x=x_coord, color='r', linestyle='dashed', label='P wave')
+			ax1.axvline(x=px_coord, color='r', linestyle='dashed', label='P wave')
+			ax1.axvline(x=sx_coord, color='k', linestyle='dashed', label='S wave')
 			ax1.set_xlabel('t (s)')
 			ax1.set_ylabel('S(t) m/s')
 			ax1.legend()
@@ -158,15 +204,16 @@ def find_rsp(path, file, acc_rights):
 			#SNR with Hanning filter
 			ax2 = fig.add_subplot(313)
 			ax2.plot(x, snr, label='STA/LTA', color='g')
-			ax2.axvline(x=x_coord, color='r', linestyle='dashed', label='P wave')
+			ax2.axvline(x=px_coord, color='r', linestyle='dashed', label='P wave')
+			ax2.axvline(x=sx_coord, color='k', linestyle='dashed', label='S wave')
 			ax2.set_xlabel('t (s)')
 			ax2.set_ylabel('SNR')
 			ax2.legend()
 
 
 			plt.show()
-			
-			return p_amp
+			"""
+			print rsp
 
 	except IndexError as e:		#Index error means SNR was always < limiting ratio
 		if e.message == "list index out of range":

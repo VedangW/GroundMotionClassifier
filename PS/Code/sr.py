@@ -44,7 +44,7 @@ def find_sr(path, file, acc_rights):
 	y = y[0:smg.get_ndat()/ 2]
 	df = 50.0 / smg.get_ndat()
 	f = np.arange(0., smg.get_ndat()/2) * df
-
+	"""
 	print "Time taken: ", time() - t0
 
 	#Plotting the graphs
@@ -63,7 +63,7 @@ def find_sr(path, file, acc_rights):
 	ax1.legend()
 
 	plt.show()
-	
+	"""
 	#High and low limits are defined for integration
 	lh = [1, 10]
 	ll = [11, 20]
@@ -76,4 +76,3 @@ def main():
 if __name__ == "__main__":
 	main()
 
-#2.261

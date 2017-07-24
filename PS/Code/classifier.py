@@ -6,52 +6,37 @@
 
 	Earthquake has label 1
 	Not Earthquake has label 0
+
+	Author: VedangW
 """
 
 #import statements
+import os
 import sys
+import pandas
+import matplotlib.pyplot as plt
 from time import time
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
+from fetch_data import fetch_feature_vector, fetch_labels_vector
 
-#Training the classifier
-def fit(clf, features_train, labels_train):
+def main():
+	#creating classifier
+	clf = SVC(kernel='rbf')
+
+	features_train = fetch_feature_vector()
+	labels_train = fetch_labels_vector()
+
 	t0 = time()
 	clf.fit(features_train, labels_train)
 	print "Training time: ", time() - t0, " secs"
 
-#Predicts the labels of a test set
-def predict(features_test, clf):
-	t1 = time()
-	pred = clf.predict(features_test)
-	print "Prediction time: ", time() - t1, " secs"
-	return pred
+	plt.scatter(features_train[:,0],features_train[:,1], marker='+')
+	plt.show()
 
-#Returns accuracy of the SVM
-def accuracy(pred, labels_test):
-	acc_score = accuracy_score(pred, labels_test)
-	return acc_score
-
-#Command line arguments:
-#argv[1] = deciding_argument -> t = train, p = predict, a = accuracy
-#if argv[1] = 't' -> argv = ['t', features_train, labels_train]
-#if argv[1] = 'p' -> argv = ['p', features_test]
-#if argv[1] = 'a' -> argv = ['a', features_test, labels_test]
-def main():
-	#creating classifier
-	clf = SVC(kernel='linear')
-
-	if (sys.argv[1] == 't'):
-		print "Beginning to train..."
-		fit(clf, argv[2], argv[3])
-		print "Trained the classifer."
-	elif (sys.argv[1] == 'p'):
-		pred = predict(clf, argv[2])
-		print pred
-	elif (sys.argv[1] == 'a'):
-		pred = predict(clf, argv[2])	
-		acc_score = accuracy(pred, argv[3])
-		print "Accuracy is: ", acc_score
+	x = [[1.0010466633, 0.169843732038], [1.58787884493, 0.769931641951], [1.23733655143, 0.206543477241], [-3.01018059594, 0.560479182515], [0.721427711822, -0.1930478492097]]
+	print clf.decision_function(x)
+	print clf.predict(x)
 
 if __name__ == "__main__":
 	main()

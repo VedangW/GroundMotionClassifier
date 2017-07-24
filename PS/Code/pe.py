@@ -20,7 +20,7 @@ def find_pe(rsp, c, sr):
 
 #argv = [rsp, c, sr]
 def main():
-	if sys.argv[1] == "N/A":
+	if sys.argv[1] == "N/A" or sys.argv[2] == "N/A" or sys.argv[3] == "N/A":
 		print "N/A"
 	else:
 		find_pe(sys.argv[1], sys.argv[2], sys.argv[3])

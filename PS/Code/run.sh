@@ -27,11 +27,15 @@ do
 	running="Analysing "
 	echo $running$c
 	var1="$(python rsp.py $path $c $access_rights)"
-	var2="$(python sr.py $path $c $access_rights)"
-	var3="$(python complexity.py $path $c $access_rights $var1)"
-	var4="$(python pe.py $var1 $var2 $var3)"
-	reading=$var1$space$var4
-	echo $reading >> store.txt
+	var2="$(python complexity.py $path $c $access_rights $var1)"
+	if [ \( "$var2" != "inf" \) -a \( "$var2" != "nan" \) -a \( "$var2" != "-inf" \) -a \( "$var2" != "0.0" \) -a \( "$var2" != "-0.0" \) -a \( "$var2" != "N/A" \) ]
+	then 
+		var3="$(python sr.py $path $c $access_rights)"
+		var4="$(python pe.py $var1 $var3 $var2)"
+		reading=$var2$space$var4
+		echo $reading >> store.txt
+		echo $iter >> index1.txt
+	fi
 done
 
 #For files 'pitsa001.010' to 'pitsa001.057'
@@ -41,11 +45,15 @@ do
 	running="Analysing "
 	echo $running$c
 	var1="$(python rsp.py $path $c $access_rights)"
-	var2="$(python sr.py $path $c $access_rights)"
-	var3="$(python complexity.py $path $c $access_rights $var1)"
-	var4="$(python pe.py $var1 $var2 $var3)"
-	reading=$var1$space$var4
-	echo $reading >> store.txt
+	var2="$(python complexity.py $path $c $access_rights $var1)"
+	if [ \( "$var2" != "inf" \) -a \( "$var2" != "nan" \) -a \( "$var2" != "-inf" \) -a \( "$var2" != "0.0" \) -a \( "$var2" != "-0.0" \) -a \( "$var2" != "N/A" \) ]
+	then 
+		var3="$(python sr.py $path $c $access_rights)"
+		var4="$(python pe.py $var1 $var3 $var2)"
+		reading=$var2$space$var4
+		echo $reading >> store.txt
+		echo $iter >> index1.txt
+	fi
 done
 
 #Location 
@@ -61,11 +69,15 @@ do
 	running="Analysing "
 	echo $running$c
 	var1="$(python rsp.py $path $c $access_rights)"
-	var2="$(python sr.py $path $c $access_rights)"
-	var3="$(python complexity.py $path $c $access_rights $var1)"
-	var4="$(python pe.py $var1 $var2 $var3)"
-	reading=$var1$space$var4
-	echo $reading >> store.txt
+	var2="$(python complexity.py $path $c $access_rights $var1)"
+	if [ \( "$var2" != "inf" \) -a \( "$var2" != "nan" \) -a \( "$var2" != "-inf" \) -a \( "$var2" != "0.0" \) -a \( "$var2" != "-0.0" \) -a \( "$var2" != "N/A" \) ]
+	then 
+		var3="$(python sr.py $path $c $access_rights)"
+		var4="$(python pe.py $var1 $var3 $var2)"
+		reading=$var2$space$var4
+		echo $reading >> store.txt
+		echo $iter >> index2.txt
+	fi
 done
 
 #For files 'pitsa001.010' to 'pitsa001.046'
@@ -75,11 +87,15 @@ do
 	running="Analysing "
 	echo $running$c
 	var1="$(python rsp.py $path $c $access_rights)"
-	var2="$(python sr.py $path $c $access_rights)"
-	var3="$(python complexity.py $path $c $access_rights $var1)"
-	var4="$(python pe.py $var1 $var2 $var3)"
-	reading=$var1$space$var4
-	echo $reading >> store.txt
+	var2="$(python complexity.py $path $c $access_rights $var1)" 
+	if [ \( "$var2" != "inf" \) -a \( "$var2" != "nan" \) -a \( "$var2" != "-inf" \) -a \( "$var2" != "0.0" \) -a \( "$var2" != "-0.0" \) -a \( "$var2" != "N/A" \) ] 
+	then 
+		var3="$(python sr.py $path $c $access_rights)"
+		var4="$(python pe.py $var1 $var3 $var2)"
+		reading=$var2$space$var4
+		echo $reading >> store.txt
+		echo $iter >> index2.txt
+	fi
 done
 
 echo Feature vector stored.

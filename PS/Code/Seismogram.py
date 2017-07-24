@@ -126,7 +126,7 @@ def main():
 #	print "Access rights given: ", fd.get_access_rights()
 	print "Station code is: ", fd.get_stationcode()
 
-	limits = [10, 575]
+#	limits = [10, 575]
 #	print "Area between x0 and x1: ", fd.find_area(limits)
 
 	print "Plotting seismogram..."
