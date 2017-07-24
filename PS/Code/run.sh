@@ -4,8 +4,10 @@
 #Author: VedangW
 
 echo Beginning to form the feature vector...
-#Clear all contents of the file
+#Clear all contents of all the files
 > store.txt 
+> index1.txt
+> index2.txt
 
 #Start by entering a particular directory and giving the access rights.
 

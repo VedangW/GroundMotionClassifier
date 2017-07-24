@@ -32,11 +32,15 @@ def fetch_labels_vector():
 	flat_list = [item for sublist in index1 for item in sublist]
 	index1 = flat_list
 
+#	print index1
+
 	#index2.txt stores indices from Surendranagar whose features have been taken as valid
 	index2 = pandas.read_csv('index2.txt', header=None).values
 
 	flat_list = [item for sublist in index2 for item in sublist]
 	index2 = flat_list
+
+#	print index2
 
 	#Pulling them together in a list of 0s and 1s
 	labels = pandas.read_csv('labels.txt', header=None).values
@@ -44,12 +48,14 @@ def fetch_labels_vector():
 	flat_list = [item for sublist in labels for item in sublist]
 	labels = flat_list
 
+#	print labels
+
 	labels_train = []
 	for i in index1:
-		labels_train.append(i - 1)
+		labels_train.append(labels[i - 1])
 
 	for i in index2:
-		labels_train.append(56 + i)
+		labels_train.append(labels[56 + i])
 
 	return labels_train
 
