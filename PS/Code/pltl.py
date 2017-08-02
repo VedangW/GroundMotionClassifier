@@ -40,16 +40,12 @@ def main():
 	data1 = [trace0, trace1]
 	data2 = [trace2]
 
-	url1 = plotly.plotly.plot({
+	plotly.offline.plot({
 	    "data": data1,
 	    "layout": go.Layout(title="Seismogram1")
 	})
 
-	url2 = plotly.plotly.plot({
-		"data": data2,
-		"layout": go.Layout(title="Seismogram2")
-	})
-
+	"""
 	fileId_1 = fileId_from_url(url_1)
 	fileId_2 = fileId_from_url(url_2)
 
@@ -70,12 +66,29 @@ def main():
 		'fileId': fileId_2,
 		'title': 'whatever'
 	}
-	 
 	my_dboard.insert(box_a)
 	my_dboard.insert(box_b, 'below', 1)
+	"""
 
 if __name__ == "__main__":
 	main()
+
+#FOOTERS:
+
+	"""
+	t = np.arange(-20., 20., 1)
+	fig = plt.figure("Scatterplot of data")
+	axes = plt.axis()
+	print axes
+
+	ax0 = fig.add_subplot(111)
+	ax0.plot(X1, Y1, 'bo', label='Earthquakes', ms = 4)
+	ax0.plot(X2, Y2, 'rx', label='Blasting')
+	ax0.plot(
+	 
+	my_dboard.insert(box_a)
+	my_dboard.insert(box_b, 'below', 1)
+	"""
 
 #FOOTERS:
 

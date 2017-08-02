@@ -13,8 +13,8 @@ from Seismogram import Seismogram
 
 #A function to calculate the complexity given the limits
 def complexity(smg, limits_high, limits_low):
-	numerator = smg.find_area(limits_high)
-	denominator = smg.find_area(limits_low)
+	numerator = smg.find_squared_area(limits_high)
+	denominator = smg.find_squared_area(limits_low)
 
 	ratio = numerator / denominator
 	return ratio

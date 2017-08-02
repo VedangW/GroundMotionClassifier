@@ -18,7 +18,7 @@ class Seismogram:
 		self.access_rights = access_rights
 		self.dat_num = 0
 		self.amplitudelist = []
-		self.stationcode = ""
+		self.eventid = ""
 
 	#Returns number of data points
 	def get_ndat(self):
@@ -66,17 +66,27 @@ class Seismogram:
 	def get_filename(self):
 		return self.filename
 
-	#Returns the station code
-	def get_stationcode(self):
+	#Returns the event id
+	#Format of event id is: "st.code yy mm dd hh min sec" 
+	def get_event_id(self):
 		import os
 		os.chdir(self.path)
+
+		self.eventid = ""
 
 		f = open(self.filename)
 		lines = f.readlines()
 		data = lines[3].split()
-		self.stationcode = data[1]
+		stationcode = data[1]
 
-		return self.stationcode
+		data = lines[0].split()
+		data.pop(0)
+
+		self.eventid += stationcode + " "
+		for i in data:
+			self.eventid += i + " "
+
+		return self.eventid
 
 	#Plots the seismogram as S(t) vs t
 	def plot_graph(self):
@@ -92,13 +102,15 @@ class Seismogram:
 		plt.xlabel('t (s)')
 
 	#Finda area of seismogram within given limits
-	def find_area(self, limits):
+	def find_squared_area(self, limits):
 		import numpy as np
 		from numpy import trapz
 
 		x0 = int(limits[0])
 		x1 = int(limits[1])
 		amps = self.get_amplitudes()
+		for i in range(len(amps)):
+			amps[i] = amps[i] ** 2
 		
 		Area = trapz(amps[x0:x1], dx=0.02)
 		
@@ -124,7 +136,7 @@ def main():
 #	print "Filename: ", fd.get_filename()
 #	print "Path to file: ", fd.get_path()
 #	print "Access rights given: ", fd.get_access_rights()
-	print "Station code is: ", fd.get_stationcode()
+	print "Event is: ", fd.get_event_id()
 
 #	limits = [10, 575]
 #	print "Area between x0 and x1: ", fd.find_area(limits)

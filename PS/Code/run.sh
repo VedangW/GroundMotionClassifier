@@ -8,6 +8,7 @@ echo Beginning to form the feature vector...
 > store.txt 
 > index1.txt
 > index2.txt
+> headers.txt
 
 #Start by entering a particular directory and giving the access rights.
 
@@ -30,13 +31,16 @@ do
 	echo $running$c
 	var1="$(python rsp.py $path $c $access_rights)"
 	var2="$(python complexity.py $path $c $access_rights $var1)"
+	echo $var5 >> headers.txt
+	var5="$(python eventid.py $path $c $access_rights)"
 	if [ \( "$var2" != "inf" \) -a \( "$var2" != "nan" \) -a \( "$var2" != "-inf" \) -a \( "$var2" != "0.0" \) -a \( "$var2" != "-0.0" \) -a \( "$var2" != "N/A" \) ]
 	then 
 		var3="$(python sr.py $path $c $access_rights)"
 		var4="$(python pe.py $var1 $var3 $var2)"
-		reading=$var2$space$var4
+		reading=$var2$space$var4$space$var5
 		echo $reading >> store.txt
 		echo $iter >> index1.txt
+
 	fi
 done
 
@@ -48,11 +52,13 @@ do
 	echo $running$c
 	var1="$(python rsp.py $path $c $access_rights)"
 	var2="$(python complexity.py $path $c $access_rights $var1)"
+	var5="$(python eventid.py $path $c $access_rights)"
+	echo $var5 >> headers.txt
 	if [ \( "$var2" != "inf" \) -a \( "$var2" != "nan" \) -a \( "$var2" != "-inf" \) -a \( "$var2" != "0.0" \) -a \( "$var2" != "-0.0" \) -a \( "$var2" != "N/A" \) ]
 	then 
 		var3="$(python sr.py $path $c $access_rights)"
 		var4="$(python pe.py $var1 $var3 $var2)"
-		reading=$var2$space$var4
+		reading=$var2$space$var4$space$var5
 		echo $reading >> store.txt
 		echo $iter >> index1.txt
 	fi
@@ -72,11 +78,13 @@ do
 	echo $running$c
 	var1="$(python rsp.py $path $c $access_rights)"
 	var2="$(python complexity.py $path $c $access_rights $var1)"
+	var5="$(python eventid.py $path $c $access_rights)"
+	echo $var5 >> headers.txt
 	if [ \( "$var2" != "inf" \) -a \( "$var2" != "nan" \) -a \( "$var2" != "-inf" \) -a \( "$var2" != "0.0" \) -a \( "$var2" != "-0.0" \) -a \( "$var2" != "N/A" \) ]
 	then 
 		var3="$(python sr.py $path $c $access_rights)"
 		var4="$(python pe.py $var1 $var3 $var2)"
-		reading=$var2$space$var4
+		reading=$var2$space$var4$space$var5
 		echo $reading >> store.txt
 		echo $iter >> index2.txt
 	fi
@@ -90,11 +98,13 @@ do
 	echo $running$c
 	var1="$(python rsp.py $path $c $access_rights)"
 	var2="$(python complexity.py $path $c $access_rights $var1)" 
+	var5="$(python eventid.py $path $c $access_rights)"
+	echo $var5 >> headers.txt
 	if [ \( "$var2" != "inf" \) -a \( "$var2" != "nan" \) -a \( "$var2" != "-inf" \) -a \( "$var2" != "0.0" \) -a \( "$var2" != "-0.0" \) -a \( "$var2" != "N/A" \) ] 
 	then 
 		var3="$(python sr.py $path $c $access_rights)"
 		var4="$(python pe.py $var1 $var3 $var2)"
-		reading=$var2$space$var4
+		reading=$var2$space$var4$space$var5
 		echo $reading >> store.txt
 		echo $iter >> index2.txt
 	fi

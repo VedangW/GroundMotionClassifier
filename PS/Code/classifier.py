@@ -14,8 +14,8 @@ import os
 import sys
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 from time import time
+
 from sklearn.svm import SVC
 from fetch_data import fetch_feature_vector, fetch_labels_vector
 
@@ -34,17 +34,29 @@ def ask_for_data():
 			break
 	return test_data
 
+def differentiate(params):
+	event_ids = []
+	for i in params:
+		eid = i.pop(2)
+		event_ids.append(eid)	
+
+	return params, event_ids
+
 def main():
 	#creating classifier
 	clf = SVC(kernel='linear')
 
-	features_train = fetch_feature_vector()
+	#Fetching data from given text files
+	params = fetch_feature_vector()
+	features_train, event_ids = differentiate(params)
 	labels_train = fetch_labels_vector()
 
+	#Fitting the data in the classifier
 	t0 = time()
 	clf.fit(features_train, labels_train)
 	print "Training time: ", time() - t0, " secs"
 
+	#Preparing vector for scatterplots
 	X1 = []
 	Y1 = []
 	X2 = []
@@ -57,11 +69,13 @@ def main():
 			X2.append(features_train[i][0])
 			Y2.append(features_train[i][1])
 
+	#Equation of decision boundary
 	slope = clf.coef_[0][1]
 	intercept = clf.coef_[0][0]
-	xi = np.arange(-10, 13, 0.02)
+	xi = np.arange(0, 13, 0.02)
 	yline = slope * xi + intercept
 
+	#Plotting the hyperplane
 	trace0 = go.Scatter(
 		x = xi,
 		y = yline,
@@ -69,11 +83,13 @@ def main():
 		mode = 'lines',
 		)
 
+	#Plotting the points for earthquakes and blastings.
 	trace1 = go.Scatter(
 	    x = X1,
 	    y = Y1,
 	    name = 'Earthquake',
 	    mode = 'markers',
+	    text = 'Earthquake',
 	    opacity = 0.7,
 	    marker=dict(
 	        size='16',
@@ -86,6 +102,7 @@ def main():
 		y = Y2,
 		name = 'Blasting',
 		mode = 'markers',
+		text = 'Blasting',
 		opacity = 0.7,
 		marker = dict(
 			size = '16',
@@ -93,9 +110,29 @@ def main():
 		)
 	)
 
-	data = [trace0, trace1, trace2]
+	layout = go.Layout(
+	    title='Plot Title',
+	    xaxis=dict(
+	        title='complexity',
+	        titlefont=dict(
+	            family='Courier New, monospace',
+	            size=18,
+	            color='#7f7f7f'
+	        )
+	    ),
+	    yaxis=dict(
+	        title='log Pe',
+	        titlefont=dict(
+	            family='Courier New, monospace',
+	            size=18,
+	            color='#7f7f7f'
+	        )
+	    )
+	)
 
-	plotly.offline.plot({"data": data, "layout": go.Layout(title='Scatterplot and Decision Boundary')})
+	#Using plotly to plot it
+	data = [trace0, trace1, trace2]
+	plotly.offline.plot({"data": data, "layout": layout})
 
 if __name__ == "__main__":
 	main()

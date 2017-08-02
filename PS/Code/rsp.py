@@ -177,9 +177,9 @@ def find_rsp(path, file, acc_rights):
 			px_coord = 0.02 * ptime
 			sx_coord = 0.02 * stime
 			x = np.arange(0., ndat * 0.02, 0.02)
-			"""
+			"""			
 			print "Time taken: ", time() - t0, " s"
-
+			
 			#Plotting the graphs
 			fig = plt.figure('P Wave Location')
 
