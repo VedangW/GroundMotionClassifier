@@ -10,7 +10,17 @@
 
 import pandas
 
-#To fetch feature vector from store.txt
+"""	To fetch feature vector from store.txt.
+	
+	The feature vector is created in this function, which is called
+	by classifier to retrieve data in store.txt.
+
+	### args:
+	None.
+
+	### returns:
+	A python list of features for all instances. 
+"""
 def fetch_feature_vector():
 	vector = pandas.read_csv('store.txt', header=None).values
 
@@ -19,12 +29,30 @@ def fetch_feature_vector():
 
 	features_train = []
 	for x in vector:
-		x = [float(i) for i in x.split()]
-		features_train.append(x)
+		x = [i for i in x.split()]
+		y = []
+		y.append(float(x.pop(0)))
+		y.append(float(x.pop(0)))
+		string = ""
+		for c in x:
+			string = string + c + " "
+		y.append(string)
+		features_train.append(y)
 
 	return features_train
 
-# To fetch labels vector from labels.txt
+
+"""	To fetch label vector from labels.txt.
+	
+	The label vector is created in this function, which is called
+	by classifier to retrieve data in labels.txt.
+
+	### args:
+	None.
+
+	### returns:
+	A python list of labels for all instances. 
+"""
 def fetch_labels_vector():
 	#index1.txt stores indices from Kachchh whose features have been taken as valid
 	index1 = pandas.read_csv('index1.txt', header=None).values
@@ -59,6 +87,11 @@ def fetch_labels_vector():
 
 	return labels_train
 
+
+""" MAIN:
+	For analysis of features and labels.
+	Prints the feature and label vectors.
+"""
 def main():
 	print fetch_feature_vector()
 	print fetch_labels_vector()
