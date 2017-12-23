@@ -4,6 +4,7 @@
 	a particular seismogram.
 
 	Author: VedangW
+	Status: verified
 """
 import os
 import sys
@@ -75,7 +76,7 @@ def find_C(path, file, acc_rights, rsp):
 """	MAIN:
 	args = [path, filename, access rights]
 
-	#Note:
+	# Note:
 	If S/P ratio is not calculated, then complexity is also not calculated.
 """
 def main():

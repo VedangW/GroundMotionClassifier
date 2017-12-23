@@ -2,6 +2,9 @@
 
 """ Program to calculate the log of Power of Event from complexity, 
 	S/P ratio and spectral ratio.
+
+	Author: VedangW
+	Status: verified
 """
 import sys
 import math

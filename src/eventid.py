@@ -4,6 +4,7 @@
 	Filename, path, access rights given as command line parameters.
 
 	Author: VedangW
+	Status: verified
 """
 import os
 import sys

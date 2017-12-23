@@ -5,7 +5,16 @@
 	particular file in a needed way, plot its graph and find the area.
 
 	Author: VedangW
+	Status: verified
 """
+
+import os
+import sys
+import numpy as np
+import peakutils as pkt
+import pandas as pd
+import matplotlib.pyplot as plt
+
 
 class Seismogram:
 	""" A class to play with the file. Enough said.
@@ -59,11 +68,14 @@ class Seismogram:
 	"""
 	def get_ndat(self):
 		import os
+
 		os.chdir(self.path)
 
 		data_file = open(self.filename, self.access_rights)
 		lines = data_file.readlines()
 		self.dat_num = len(lines) - 5
+
+		data_file.close()
 
 		return self.dat_num
 
@@ -85,9 +97,6 @@ class Seismogram:
 	"""
 	def get_amplitudes(self):
 		import os
-		import pandas as pd
-		import peakutils as pkt
-
 		os.chdir(self.path)
 
 		self.amplitudelist = []
@@ -174,6 +183,8 @@ class Seismogram:
 		for i in data:
 			self.eventid += i + " "
 
+		f.close()
+
 		return self.eventid
 
 
@@ -239,7 +250,7 @@ class Seismogram:
 		for i in range(len(amps)):
 			amps[i] = amps[i] ** 2
 		
-		Area = trapz(amps[x0:x1], dx=0.02)
+		Area = np.trapz(amps[x0:x1], dx=0.02)
 		
 		return Area
 		
@@ -258,9 +269,9 @@ def main():
 	import matplotlib.pyplot as plt
 
 	if sys.argv[1] == "Kachchh":
-		path = "/home/vedang/Desktop/PS/Datasets/Kachchh"
+		path = "/home/vedang/Desktop/isr_project/data/Kachchh"
 	elif sys.argv[1] == "Surendranagar":
-		path = "/home/vedang/Desktop/PS/Datasets/Surendranagar"
+		path = "/home/vedang/Desktop/isr_project/data/Surendranagar"
 	else:
 		print "Check path again."
 		return 
@@ -274,7 +285,7 @@ def main():
 	print "Event is: ", fd.get_event_id()
 
 #	limits = [10, 575]
-#	print "Area between x0 and x1: ", fd.find_area(limits)
+#	print ("Area between x0 and x1: ", fd.find_area(limits)
 
 	print "Plotting seismogram..."
 	fd.plot_graph()
