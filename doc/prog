@@ -1,0 +1,55 @@
+#!/bin/bash
+
+SourceDir="/home/isrdata/ISR_DATA/Seis_Mayank/data"
+
+Stn="SUR"
+
+############################
+
+test -d ${Stn}_eq || mkdir ${Stn}_eq
+test -d ${Stn}_blast || mkdir ${Stn}_blast
+
+for sacfile in `ls ${SourceDir}/${Stn}/*Z.sac`
+do
+  base=`basename ${sacfile} Z.sac`
+  zfile=${base}Z.sac
+  nfile=${base}N.sac
+  efile=${base}E.sac
+
+  echo
+  echo
+  echo ${zfile:0:14}
+  test -f ${Stn}_eq/${zfile} || test -f ${Stn}_blast/${zfile} && echo "Aready done" && continue
+
+  sac 1>/dev/null 2>/dev/null << EOF
+  qdp off
+  r ${SourceDir}/${Stn}/${zfile} ${SourceDir}/${Stn}/${nfile} ${SourceDir}/${Stn}/${efile}
+  ylim all
+  ppk absolute
+  q
+EOF
+
+  echo "Enter 1 for eq, 2 for blast, 0 to quit:"
+  read x
+
+  if [ $x -eq 1 ]
+  then
+    echo Eq
+    cp ${SourceDir}/${Stn}/${zfile} ${Stn}_eq
+    cp ${SourceDir}/${Stn}/${nfile} ${Stn}_eq
+    cp ${SourceDir}/${Stn}/${efile} ${Stn}_eq
+  elif [ $x -eq 2 ]
+  then
+    echo Blast
+    cp ${SourceDir}/${Stn}/${zfile} ${Stn}_blast
+    cp ${SourceDir}/${Stn}/${nfile} ${Stn}_blast
+    cp ${SourceDir}/${Stn}/${efile} ${Stn}_blast
+  elif [ $x -eq 0 ]
+  then
+    exit
+  else
+    echo Not Sure
+  fi
+
+  #break #sacfile
+done
