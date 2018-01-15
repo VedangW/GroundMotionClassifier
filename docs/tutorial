@@ -1,0 +1,113 @@
+### TUTORIAL FOR GroundMotionClassifier
+
+	GroundMotionClassifier is an application developed for classifying Ground
+	Motion signals into Earthquakes and Blastings*.
+
+	The core of this application is Support Vector Machine classifier (A Machine Learning algorithm).
+	Like any other ML algorithm, the classifier learns from pre-classified data and makes a 
+	prediction on a newly detected event.
+
+## Working of GMC:
+
+	The application can be thought of as working in 3 parts:
+
+	- Preprocessing of data
+	- Training the model
+	- Prediction on a new event
+
+	Preprocessing of data: All data is located in the 'data' directory in the 
+		home of the project. In the preprocessing phase, the application goes
+		through all the subdirectories of data and checks for valid events.
+		An event is valid if all three phases (Z, N and E) of the event are present.
+		It then cleans data by discarding any events it cannot use. 
+		Feature entries of each event are then calculated and stored.
+
+	Training the model: Training the model includes fetching all stored data,
+		dividing it into training and testing sets, and sending all data to the classifier
+		to fit. The classifier fits it and makes a prediction on the test set, 
+		reporting the accuracy and F1 score.
+
+	Prediction on a new event: Any new event can be classified by the GMC using
+		the classifier.
+
+## Setting up
+
+	Dependencies of GMC (python3):
+		- Scipy
+		- Numpy
+		- Matplotlib
+		- Scikit-Learn
+		- Peakutils
+		- Plotly
+		- Pickle
+		- Obspy
+
+	To set up GMC for the first time:
+
+	- Place it in the required directory.
+	- cd to it using the terminal.
+	- Run the setup file, 'setup.py':
+
+	```bash
+		python scripts/setup.py
+	```	
+	After that, resetting it up can be done by:
+
+	```bash
+		gmc setup
+	```
+
+## What you can do with the GMC at a user level
+
+	There are two things which any user can do with the GMC:
+
+	- Re-training the classifier using more data
+	- Making a prediction on a new event
+
+	1) Re-training the classifier:
+
+	- Add the new data in the data folder in the following format:
+		-- If the station name is STA, then create two different folders, STA_eq, and STA_bl
+		-- STA_eq should contain all the earthquake events in the station anf STA_bl all the blasts
+		-- Place these two folders in the data directory
+		-- Repeat for all stations.
+
+	- cd to gmc (home of application) and run:
+
+	```bash
+		gmc train
+	```
+
+	- This should take some time (initial data took about 3.5 hrs).
+
+	2) Making a new prediction:
+
+	To make a new prediction, use the following script:
+
+	```bash
+		python GMC/predict.py z_file n_file e_file
+	```
+	Where z_file is the path to the file containing the z phase of the event and so on.
+
+	3) Influencing the algorithm:
+
+	Changing Hyper-parameters:
+		- Classifier hyper-parameters: Can be changed in train_model.py
+		- Global hyperparameters: Are located in gmc/config.py
+			-- sr_lh -> Higher limits of spectral ratio
+			-- sr_ll -> Lower limits of spectral ratio
+			-- comp_lv -> Lower value used for complexity calculation
+			-- comp_hv -> Higher value used for complexity calculation
+			-- train_ratio -> fraction of data used as training set
+			-- test_ratio -> fraction of data used as test set
+			-- validation_ratio -> fraction of data used as validation set
+
+		Note: 	If global hyper-parameters are changed, training and preprocessing should be done again.
+				If classifier hyperparameters are changed, training should be done again.
+
+	4) Brief flow of files for the algorithm:
+		- Setup: scripts/ setup.py
+		- Preprocessing: GMC/ read_events.py -> store_data.py
+		- Training: GMC/ fetch_data.py -> train_model.py
+		- Predicting: GMC/ predict.py
+		- Testing: tests/ test_seismic_event.py -> test_seismic_event_features.py 
